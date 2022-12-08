@@ -10,27 +10,17 @@ class Solution
 public:
     vector<vector<int>> generate(int numRows)
     {
-        int lval = 1;
-        int rval = 1;
-        vector<vector<int>> vec;
-        vector<int> tmp;
-        for (int i = 0; i < numRows; i++)
+        vector<vector<int>> triangle(numRows);
+        for (int row = 0; row < numRows; row++)
         {
-            tmp.clear();
-            for (int j = 0; j <= i; j++)
+            triangle[row].resize(row + 1);
+            triangle[row][0] = triangle[row][row] = 1;
+            for (int col = 1; col < row; col++)
             {
-                if (j == 0 || j == i)
-                {
-                    tmp.push_back(1);
-                    continue;
-                }
-                lval = vec[i - 1][(j - 1)];
-                rval = vec[i - 1][j];
-                tmp.push_back(lval + rval);
+                triangle[row][col] = triangle[row - 1][col - 1] + triangle[row - 1][col];
             }
-            vec.push_back(tmp);
         }
-        return vec;
+        return triangle;
     }
 };
 // @lc code=end

@@ -8,24 +8,30 @@
 class Solution
 {
 public:
-    void generate(vector<int> &vec, vector<int> &nums, vector<vector<int>> &res)
+    vector<vector<int>> ans;
+    void rec(vector<int> &nums, vector<int> &tmp, vector<int> &dp)
     {
-        if(vec.size() == nums.size()) {
-            res.push_back(vec);
-            return;
+        if (tmp.size() == nums.size())
+        {
+            ans.push_back(tmp);
         }
-        vec.push_back(nums[0]);
-        nums.erase(nums.begin());
-        generate(vec, nums, res);
-        nums.push_back(vec.back());
-        vec.pop_back();
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (dp[i] == 0)
+            {
+                tmp.push_back(nums[i]);
+                dp[i] = 1;
+                rec(nums, tmp, dp);
+                tmp.pop_back();
+                dp[i] = 0;
+            }
+        }
     }
     vector<vector<int>> permute(vector<int> &nums)
     {
-        vector<int> vec;
-        vector<vector<int>> res;
-        generate(vec, nums, res);
-        return res;
+        vector<int> dp(nums.size(), 0), tmp;
+        rec(nums, tmp, dp);
+        return ans;
     }
 };
 // @lc code=end
