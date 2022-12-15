@@ -30,12 +30,10 @@ public:
     }
     bool leafSimilar(TreeNode *root1, TreeNode *root2)
     {
-        vector<int> ans, vec;
-        rec(root1, ans);
-        vec = ans;
-        ans.clear();
-        rec(root2, ans);
-        if (vec == ans)
+        vector<int> v1, v2;
+        rec(root1, v1);
+        rec(root2, v2);
+        if (v1 == v2)
             return true;
         return false;
     }
