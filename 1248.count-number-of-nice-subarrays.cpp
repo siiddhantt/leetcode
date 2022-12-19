@@ -10,34 +10,31 @@ class Solution
 public:
     int numberOfSubarrays(vector<int> &nums, int k)
     {
-        int n = nums.size();
-        for (auto it : nums)
+        nums.push_back(0);
+        int n = nums.size(), l = 0, r = 0, cou = 0, ans = 0;
+        while (l <= r && r < n)
         {
-            if (it % 2 == 0)
+            if (cou == k)
             {
-                it = 0;
+                int i;
+                for (i = r; i < n - 1; i++)
+                {
+                    if (nums[i] % 2 != 0)
+                        break;
+                }
+                ans += (i + 1) - r;
+                if (nums[l] % 2 != 0)
+                    cou--;
+                l++;
             }
             else
             {
-                it = 1;
+                if (nums[r] % 2 != 0)
+                    cou++;
+                r++;
             }
         }
-        int sum = 0, cou = 0;
-        unordered_map<int, int> m;
-        for (int i = 0; i < n; i++)
-        {
-            sum += nums[i];
-            if (sum == k)
-            {
-                cou++;
-            }
-            if (m.find(sum - k) != m.end())
-            {
-                cou += m[sum - k];
-            }
-            m[sum] += 1;
-        }
-        return cou;
+        return ans;
     }
 };
 // @lc code=end
