@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=122 lang=cpp
+ * @lc app=leetcode id=309 lang=cpp
  *
- * [122] Best Time to Buy and Sell Stock II
+ * [309] Best Time to Buy and Sell Stock with Cooldown
  */
 
 // @lc code=start
@@ -28,7 +28,7 @@ public:
         {
             if (dp2[i] != -1)
                 return dp2[i];
-            return dp2[i] = max(rec(i + 1, 0, prices, dp1, dp2) + prices[i], rec(i + 1, 1, prices, dp1, dp2));
+            return dp2[i] = max(rec(i + 2, 0, prices, dp1, dp2) + prices[i], rec(i + 1, 1, prices, dp1, dp2));
         }
         return 0;
     }
