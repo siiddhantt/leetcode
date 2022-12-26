@@ -10,40 +10,19 @@ class Solution
 public:
     bool canJump(vector<int> &nums)
     {
-        int n = nums.size();
-        vector<int> dp(n, -1);
+        int n = nums.size(), least = 0;
         for (int i = n - 1; i >= 0; i--)
         {
-            if (dp[i] == -1)
+            if (nums[i] >= least)
             {
-                if (nums[i] >= (n - 1 - i))
-                {
-                    dp[i] = 1;
-                }
-                else
-                {
-                    if (nums[i] == 0)
-                    {
-                        dp[i] = 0;
-                    }
-                    else
-                    {
-                        for (int j = i + 1; j <= i + nums[i]; j++)
-                        {
-                            if (dp[j] == 1)
-                            {
-                                dp[i] = 1;
-                            }
-                        }
-                        if (dp[i] != 1)
-                        {
-                            dp[i] = 0;
-                        }
-                    }
-                }
+                least = 1;
+                continue;
             }
+            least++;
         }
-        return (dp[0] == 1);
+        if (least == 1)
+            return true;
+        return false;
     }
 };
 // @lc code=end
