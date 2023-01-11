@@ -10,22 +10,17 @@ class Solution
 public:
     int maxSubArray(vector<int> &nums)
     {
-        int fsum = nums[0];
-        int csum = 0;
-        vector<int>::iterator iter;
-        for (iter = nums.begin(); iter != nums.end(); ++iter)
+        int currsum = 0;
+        int mxsum = nums[0];
+        for (auto it : nums)
         {
-            csum += *iter;
-            if (csum > fsum)
-            {
-                fsum = csum;
-            }
-            if (csum < 0)
-            {
-                csum = 0;
-            }
+            currsum += it;
+            if (currsum > mxsum)
+                mxsum = currsum;
+            if (currsum < 0)
+                currsum = 0;
         }
-        return fsum;
+        return mxsum;
     }
 };
 // @lc code=end
