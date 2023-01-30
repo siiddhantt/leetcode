@@ -8,43 +8,24 @@
 class Solution
 {
 public:
-    int maxFwd(vector<int> &vec)
+    int product(vector<int> &nums)
     {
-        int cpro = 1, fpro = INT_MIN;
-        for (int i = 0; i < vec.size(); i++)
+        int ans = INT_MIN, pro = 1;
+        for (auto it : nums)
         {
-            cpro *= vec[i];
-            if (cpro > fpro)
-            {
-                fpro = cpro;
-            }
-            if (cpro == 0)
-            {
-                cpro = 1;
-            }
+            pro *= it;
+            ans = max(ans, pro);
+            if (pro == 0)
+                pro = 1;
         }
-        return fpro;
-    }
-    int maxBck(vector<int> &vec)
-    {
-        int cpro = 1, fpro = INT_MIN;
-        for (int i = vec.size() - 1; i >= 0; i--)
-        {
-            cpro *= vec[i];
-            if (cpro > fpro)
-            {
-                fpro = cpro;
-            }
-            if (cpro == 0)
-            {
-                cpro = 1;
-            }
-        }
-        return fpro;
+        return ans;
     }
     int maxProduct(vector<int> &nums)
     {
-        return max(maxFwd(nums), maxBck(nums));
+        int p1 = product(nums);
+        reverse(nums.begin(), nums.end());
+        int p2 = product(nums);
+        return max(p1, p2);
     }
 };
 // @lc code=end

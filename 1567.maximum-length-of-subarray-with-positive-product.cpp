@@ -8,63 +8,32 @@
 class Solution
 {
 public:
-    int maxLenFwd(vector<int> &vec)
+    int length(vector<int> &nums)
     {
-        int ccou = 0, cpro = 1;
-        int fcou = 0;
-        for (int i = 0; i < vec.size(); i++)
+        int ans = 0, cou = 0, pro = 1;
+        for (auto it : nums)
         {
-            if (vec[i] != 0)
+            if (it != 0)
             {
-                cpro *= (vec[i] / abs(vec[i]));
-                ccou++;
+                pro *= it / abs(it);
+                cou++;
+                if (pro > 0)
+                    ans = max(ans, cou);
             }
-            else {
-                cpro *= vec[i];
-                ccou++;
-            }
-            if (cpro == 0)
+            else
             {
-                cpro = 1;
-                ccou = 0;
-            }
-            if (cpro > 0 && ccou > fcou)
-            {
-                fcou = ccou;
+                pro = 1;
+                cou = 0;
             }
         }
-        return fcou;
-    }
-    int maxLenBck(vector<int> &vec)
-    {
-        int ccou = 0, cpro = 1;
-        int fcou = 0;
-        for (int i = vec.size() - 1; i >= 0; i--)
-        {
-            if (vec[i] != 0)
-            {
-                cpro *= (vec[i] / abs(vec[i]));
-                ccou++;
-            }
-            else {
-                cpro *= vec[i];
-                ccou++;
-            }
-            if (cpro == 0)
-            {
-                cpro = 1;
-                ccou = 0;
-            }
-            if (cpro > 0 && ccou > fcou)
-            {
-                fcou = ccou;
-            }
-        }
-        return fcou;
+        return ans;
     }
     int getMaxLen(vector<int> &nums)
     {
-        return max(maxLenFwd(nums), maxLenBck(nums));
+        int l1 = length(nums);
+        reverse(nums.begin(), nums.end());
+        int l2 = length(nums);
+        return max(l1, l2);
     }
 };
 // @lc code=end
