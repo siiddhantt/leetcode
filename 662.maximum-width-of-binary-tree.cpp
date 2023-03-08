@@ -21,50 +21,33 @@ class Solution
 public:
     int widthOfBinaryTree(TreeNode *root)
     {
-        if (!root)
-            return {};
-        int width = INT_MIN;
-        queue<pair<TreeNode *, int>> q;
-        map<int, vector<int>> m;
-        q.push({root, 0});
+        queue<pair<TreeNode *, long>> q;
+        q.push({root, 1});
+        int n, start, end, dif;
+        int res = 1;
         while (!q.empty())
         {
-            auto tmp = q.front();
-            TreeNode *node = tmp.first;
-            int i = tmp.second;
-            q.pop();
-            if (node->left)
+            n = q.size();
+            for (int i = 0; i < n; i++)
             {
-                q.push({node->left, i + 1});
-            }
-            else
-            {
-                if (node->val != -100)
+                auto [node, pos] = q.front();
+                q.pop();
+                if (i == 0)
                 {
-                    TreeNode *l = new TreeNode(-100);
-                    q.push({l, i + 1});
+                    start = pos;
+                    dif = pos - 1;
                 }
+                if (i == n - 1)
+                    end = pos;
+                pos -= dif;
+                if (node->left != nullptr)
+                    q.push({node->left, pos * 2 - 1});
+                if (node->right != nullptr)
+                    q.push({node->right, pos * 2});
             }
-            if (node->right)
-            {
-                q.push({node->right, i + 1});
-            }
-            else
-            {
-                if (node->val != -100)
-                {
-                    TreeNode *r = new TreeNode(-100);
-                    q.push({r, i + 1});
-                }
-            }
-            m[i].push_back(node->val);
+            res = max(res, end - start + 1);
         }
-        for (int i = 0; i < m.size() - 1; i++)
-        {
-            int n = m[i].size();
-            width = max(width, n);
-        }
-        return width;
+        return res;
     }
 };
 // @lc code=end
