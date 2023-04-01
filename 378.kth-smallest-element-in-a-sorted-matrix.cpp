@@ -10,21 +10,20 @@ class Solution
 public:
     int kthSmallest(vector<vector<int>> &matrix, int k)
     {
-        int n = matrix.size();
-        priority_queue<int> maxh;
-        for (int i = 0; i < n; i++)
+        int m = matrix.size(), n = matrix[0].size(), ans;
+        priority_queue<vector<int>, vector<vector<int>>, greater<>> minHeap;
+        for (int r = 0; r < min(m, k); ++r)
+            minHeap.push({matrix[r][0], r, 0});
+        while (k--)
         {
-            for (int j = 0; j < n; j++)
-            {
-                int curr = matrix[i][j];
-                maxh.push(curr);
-                if (maxh.size() > k)
-                {
-                    maxh.pop();
-                }
-            }
+            auto top = minHeap.top();
+            minHeap.pop();
+            ans = top[0];
+            int r = top[1], c = top[2];
+            if (c + 1 < n)
+                minHeap.push({matrix[r][c + 1], r, c + 1});
         }
-        return maxh.top();
+        return ans;
     }
 };
 // @lc code=end
