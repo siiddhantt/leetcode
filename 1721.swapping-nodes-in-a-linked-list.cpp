@@ -20,49 +20,24 @@ class Solution
 public:
     ListNode *swapNodes(ListNode *head, int k)
     {
-        if (!head->next)
-            return head;
-        ListNode **ptr = &head;
-        ListNode *r = new ListNode();
-        int cou = 1;
-        auto tmp = *ptr;
-        r->next = tmp;
-        while (tmp->next != NULL)
+        ListNode *curr = new ListNode(head->val, head->next);
+        ListNode *node = curr;
+        ListNode *left = curr;
+        ListNode *right = curr;
+        int i = 1;
+        while (curr != NULL)
         {
-            cou++;
-            if (cou <= k)
-                r->next = tmp->next;
-            ptr = &(tmp->next);
-            tmp = *ptr;
+            if (i < k)
+                left = left->next;
+            if (i > k)
+                right = right->next;
+            curr = curr->next;
+            i++;
         }
-        int bck = cou - k + 1;
-        int diff = bck - k;
-        ptr = &(r->next);
-        tmp = *ptr;
-        ListNode *l = new ListNode();
-        l->next = r->next;
-        for (int i = 0; i < diff; i++)
-        {
-            r->next = tmp->next;
-            ptr = &(tmp->next);
-            tmp = *ptr;
-        }
-        if (bck < k)
-        {
-            ptr = &head;
-            tmp = *ptr;
-            for (int i = 0; i < bck; i++)
-            {
-                r->next = tmp;
-                ptr = &(tmp->next);
-                tmp = *ptr;
-            }
-        }
-        int v = l->next->val;
-        l->next->val = r->next->val;
-        r->next->val = v;
-        cout << cou << endl;
-        return head;
+        int tmp = left->val;
+        left->val = right->val;
+        right->val = tmp;
+        return node;
     }
 };
 // @lc code=end

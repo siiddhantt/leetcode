@@ -5,22 +5,24 @@
  */
 
 // @lc code=start
-class Solution
-{
+class Solution {
 public:
-    vector<vector<int>> generate(int numRows)
-    {
-        vector<vector<int>> triangle(numRows);
-        for (int row = 0; row < numRows; row++)
-        {
-            triangle[row].resize(row + 1);
-            triangle[row][0] = triangle[row][row] = 1;
-            for (int col = 1; col < row; col++)
-            {
-                triangle[row][col] = triangle[row - 1][col - 1] + triangle[row - 1][col];
-            }
-        }
-        return triangle;
-    }
+	vector<vector<int>> generate(int nR) {
+		vector<vector<int>> vec;
+		vec.push_back({1});
+		for (int i = 1; i < nR; i++) {
+			vector<int> tmp;
+			for (int j = 0; j <= i; j++) {
+				if (j == 0)
+					tmp.push_back(vec[i - 1].front());
+				else if (j == i)
+					tmp.push_back(vec[i - 1].back());
+				else
+					tmp.push_back(vec[i - 1][j - 1] + vec[i - 1][j]);
+			}
+			vec.push_back(tmp);
+		}
+		return vec;
+	}
 };
 // @lc code=end

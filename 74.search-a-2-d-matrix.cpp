@@ -5,40 +5,41 @@
  */
 
 // @lc code=start
-class Solution
-{
+class Solution {
 public:
-    bool bsearch(int i, int j, vector<vector<int>> &vec, int t)
-    {
-        int l = 0, r = j;
-        while (r - l > 1)
-        {
-            int m = l + (r - l) / 2;
-            if (vec[i][m] == t)
-                return true;
-            else if (vec[i][m] < t)
-                l = m + 1;
-            else
-                r = m - 1;
-        }
-        if (vec[i][l] == t || vec[i][r] == t)
-            return true;
-        return false;
-    }
-    bool searchMatrix(vector<vector<int>> &matrix, int target)
-    {
-        int m = matrix.size(), n = matrix[0].size();
-        int i = 0, j = n - 1;
-        while ((i >= 0 && i < m) && (j >= 0 && j < n))
-        {
-            if (matrix[i][j] == target)
-                return true;
-            else if (matrix[i][j] >= target)
-                return bsearch(i, j, matrix, target);
-            else
-                i++;
-        }
-        return false;
-    }
+	bool bsearch(vector<vector<int>>& mat, int row, int t) {
+		int n = mat[0].size();
+		int i = 0, j = n - 1;
+		while (j - i > 1) {
+			int md = i + (j - i) / 2;
+			if (mat[row][md] == t)
+				return true;
+			else if (mat[row][md] > t)
+				j = md - 1;
+			else
+				i = md + 1;
+		}
+		if (mat[row][i] == t)
+			return true;
+		if (mat[row][j] == t)
+			return true;
+		return false;
+	}
+	bool searchMatrix(vector<vector<int>>& mat, int t) {
+		int m = mat.size();
+		int i = 0, j = m - 1;
+		while (j - i > 1) {
+			int md = i + (j - i) / 2;
+			if (mat[md][0] > t)
+				j = md - 1;
+			else
+				i = md;
+		}
+		if (bsearch(mat, i, t))
+			return true;
+		if (bsearch(mat, j, t))
+			return true;
+		return false;
+	}
 };
 // @lc code=end

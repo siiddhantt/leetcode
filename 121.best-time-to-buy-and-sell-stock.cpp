@@ -5,18 +5,17 @@
  */
 
 // @lc code=start
-class Solution
-{
+class Solution {
 public:
-    int maxProfit(vector<int> &prices)
-    {
-        int prof = 0;
-        int curr_min = prices[0];
-        for(int i = 1; i < prices.size(); i++){
-            prof = max(prices[i]-curr_min, prof);
-            curr_min = min(curr_min, prices[i]);
-        }
-        return prof;
-    }
+	int maxProfit(vector<int>& prices) {
+		int n = prices.size(), cmin = prices[0], ans = 0;
+		for (int i = 0; i < n; i++) {
+			if (prices[i] < cmin)
+				cmin = prices[i];
+			else
+				ans = max(ans, prices[i] - cmin);
+		}
+		return ans;
+	}
 };
 // @lc code=end

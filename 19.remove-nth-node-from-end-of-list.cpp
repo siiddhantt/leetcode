@@ -15,40 +15,41 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution
 {
 public:
     ListNode *removeNthFromEnd(ListNode *head, int n)
     {
-        ListNode *iter = head;
-        int cou = 0, pos;
-        while (iter != NULL)
+        ListNode *curr = new ListNode(head->val, head->next);
+        ListNode *node = curr;
+        ListNode *right = curr;
+        ListNode *prev = NULL;
+        int i = 1;
+        while (curr != NULL)
         {
-            cou++;
-            iter = iter->next;
-        }
-        if (cou == 1 && n == 1)
-        {
-            return NULL;
-        }
-        pos = cou - n;
-        iter = head;
-        for (int i = 0; i <= pos; i++)
-        {
-            if (n == 1 && i == pos - 1)
+            if (i > n)
             {
-                iter->next = NULL;
-                break;
+                prev = right;
+                right = right->next;
             }
-            if (i == pos)
-            {
-                iter->val = iter->next->val;
-                iter->next = iter->next->next;
-                break;
-            }
-            iter = iter->next;
+            curr = curr->next;
+            i++;
         }
-        return head;
+        if (!prev)
+            return right->next;
+        else
+            prev->next = right->next;
+        return node;
     }
 };
 // @lc code=end
