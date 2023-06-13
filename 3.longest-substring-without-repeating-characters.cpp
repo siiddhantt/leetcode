@@ -5,26 +5,18 @@
  */
 
 // @lc code=start
-class Solution
-{
+class Solution {
 public:
-    int lengthOfLongestSubstring(string s)
-    {
-        int n = s.length(), cou = 0;
+	int lengthOfLongestSubstring(string s) {
         unordered_map<char, int> m;
-        int l = 0, r = 0;
-        while (r < n)
-        {
-            while ((r < n) && (m.find(s[r]) == m.end()))
-            {
-                m[s[r]] += 1;
-                r++;
-            }
-            cou = max(cou, r - l);
-            m.erase(s[l]);
-            l++;
-        }
-        return cou;
-    }
+		int n = s.size(), l = 0, r = 0, ans = 0;
+		while (r < n) {
+			while (r < n && m.find(s[r]) == m.end())
+				m[s[r++]]++;
+			ans = max(ans, r - l);
+			m.erase(s[l++]);
+		}
+		return ans;
+	}
 };
 // @lc code=end

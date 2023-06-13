@@ -5,28 +5,26 @@
  */
 
 // @lc code=start
-class Solution
-{
+class Solution {
 public:
-    int longestConsecutive(vector<int> &nums)
-    {
-        if (nums.size() == 0)
-            return 0;
-        if (nums.size() == 1)
-            return 1;
-        sort(nums.begin(), nums.end());
-        int ans = 1, curr = 1;
-        for (int i = 0; i < nums.size() - 1; i++)
-        {
-            if ((nums[i + 1] - nums[i]) == 1)
-                curr += 1;
-            else if ((nums[i + 1] - nums[i]) == 0)
-                continue;
-            else
-                curr = 1;
-            ans = max(ans, curr);
-        }
-        return ans;
-    }
+	int longestConsecutive(vector<int>& nums) {
+		int ans = 0;
+		unordered_map<int, int> m;
+		for (auto it : nums)
+			m[it]++;
+		for (auto it : m) {
+			if (m.find(it.first - 1) != m.end())
+				continue;
+			else {
+				int val = it.first + 1, curr = 1;
+				while (m.find(val) != m.end()) {
+					curr++;
+					val++;
+				}
+				ans = max(ans, curr);
+			}
+		}
+		return ans;
+	}
 };
 // @lc code=end

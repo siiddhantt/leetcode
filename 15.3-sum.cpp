@@ -5,46 +5,34 @@
  */
 
 // @lc code=start
-class Solution
-{
+class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int> &nums)
-    {
-        vector<vector<int>> ans;
-        sort(nums.begin(), nums.end());
-        if (nums.front() > 0 || nums.back() < 0)
-            return ans;
-        if (nums.front() == 0 && nums.back() == 0)
-            return {{0, 0, 0}};
-        set<multiset<int>> st;
-        int l = 0, m = 1, r = nums.size() - 1;
-        while (nums[l] <= 0)
-        {
-            m = l + 1;
-            r = nums.size() - 1;
-            int s = nums[l] + nums[m];
-            while (s <= 0)
-            {
-                while (r > m && (nums[r] + s) >= 0)
-                {
-                    if (s + nums[r] == 0 && st.find({nums[l], nums[m], nums[r]}) == st.end())
-                    {
-                        ans.push_back({nums[l], nums[m], nums[r]});
-                        st.insert({nums[l], nums[m], nums[r]});
-                        break;
-                    }
-                    r--;
-                }
-                m++;
-                if (m > nums.size() - 1)
-                    break;
-                s = nums[l] + nums[m];
-            }
-            l++;
-            if (l > nums.size() - 2)
-                break;
-        }
-        return ans;
-    }
+	vector<vector<int>> threeSum(vector<int>& nums) {
+		int n = nums.size();
+		vector<vector<int>> ans;
+		sort(nums.begin(), nums.end());
+		for (int i = 0; i < n - 2; i++) {
+			if (i > 0 && nums[i] == nums[i - 1])
+				continue;
+			int m = i + 1, j = n - 1;
+			while (j > m) {
+				int s = nums[i] + nums[m] + nums[j];
+				if (s < 0)
+					m++;
+				else if (s > 0)
+					j--;
+				else {
+					ans.push_back({nums[i], nums[m], nums[j]});
+					while (m < n - 1 && nums[m] == nums[m + 1])
+						m++;
+					m++;
+					while (j > i && nums[j] == nums[j - 1])
+						j--;
+					j--;
+				}
+			}
+		}
+		return ans;
+	}
 };
 // @lc code=end
