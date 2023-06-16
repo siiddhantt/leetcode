@@ -25,31 +25,24 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution
-{
+class Solution {
 public:
-    ListNode *removeNthFromEnd(ListNode *head, int n)
-    {
-        ListNode *curr = new ListNode(head->val, head->next);
-        ListNode *node = curr;
-        ListNode *right = curr;
-        ListNode *prev = NULL;
-        int i = 1;
-        while (curr != NULL)
-        {
-            if (i > n)
-            {
-                prev = right;
-                right = right->next;
-            }
-            curr = curr->next;
-            i++;
-        }
-        if (!prev)
-            return right->next;
-        else
-            prev->next = right->next;
-        return node;
-    }
+	ListNode* removeNthFromEnd(ListNode* head, int n) {
+		int cou = 1;
+		ListNode* iter1 = head; ListNode* iter2 = NULL;
+		while (iter1) {
+			if (iter2)
+				iter2 = iter2->next;
+			if (cou == n + 1)
+				iter2 = head;
+			iter1 = iter1->next;
+			cou++;
+		}
+		if (iter2)
+			iter2->next = iter2->next->next;
+		else
+			return head->next;
+		return head;
+	}
 };
 // @lc code=end

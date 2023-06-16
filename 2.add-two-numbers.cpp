@@ -15,34 +15,38 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution
-{
+class Solution {
 public:
-    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
-    {
-        ListNode *res = new ListNode();
-        ListNode *tmp = res;
-        int c = 0;
-        while (l1 != NULL || l2 != NULL || c != 0)
-        {
-            int s = 0;
-            if (l1 != NULL)
-            {
-                s += (l1->val);
-                l1 = l1->next;
-            }
-            if (l2 != NULL)
-            {
-                s += (l2->val);
-                l2 = l2->next;
-            }
-            s += c;
-            c = s / 10;
-            s = s % 10;
-            tmp->next = new ListNode(s);
-            tmp = tmp->next;
-        }
-        return res->next;
-    }
+	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+		int c = 0;
+		ListNode* tmp = new ListNode(); ListNode* sum = tmp;
+		while (l1 != NULL || l2 != NULL) {
+			int d = 0;
+			if (l1 == NULL) {
+				d = l2->val + c;
+				l2 = l2->next;
+			}
+			else if (l2 == NULL) {
+				d = l1->val + c;
+				l1 = l1->next;
+			}
+			else {
+				d = l1->val + l2->val + c;
+				l1 = l1->next;
+				l2 = l2->next;
+			}
+			if (d >= 10) {
+				d -= 10;
+				c = 1;
+			}
+			else
+				c = 0;
+			tmp->next = new ListNode(d);
+			tmp = tmp->next;
+		}
+		if (c == 1)
+			tmp->next = new ListNode(1);
+		return sum->next;
+	}
 };
 // @lc code=end

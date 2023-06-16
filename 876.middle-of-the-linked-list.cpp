@@ -15,18 +15,16 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution
-{
+class Solution {
 public:
-    ListNode *middleNode(ListNode *head)
-    {
-        ListNode *slow = head, *fast = head;
-        while (fast != NULL && fast->next != NULL)
-        {
-            slow = slow->next;
-            fast = fast->next->next;
-        }
-        return slow;
-    }
+	ListNode* middleNode(ListNode* head) {
+		ListNode* iter1 = head;
+		ListNode* iter2 = head;
+		while (iter1 && iter1->next) {
+			iter1 = iter1->next->next;
+			iter2 = iter2->next;
+		}
+		return iter2;
+	}
 };
 // @lc code=end

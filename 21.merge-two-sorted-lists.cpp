@@ -15,45 +15,31 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution
-{
+class Solution {
 public:
-    ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
-    {
-        if (list1 == NULL)
-            return list2;
-        if (list2 == NULL)
-            return list1;
-        ListNode *ptr = list1;
-        if (list1->val > list2->val)
-        {
-            ptr = list2;
-            list2 = list2->next;
-        }
-        else
-        {
-            list1 = list1->next;
-        }
-        ListNode *curr = ptr;
-        while (list1 != NULL && list2 != NULL)
-        {
-            if (list1->val < list2->val)
-            {
-                curr->next = list1;
-                list1 = list1->next;
-            }
-            else
-            {
-                curr->next = list2;
-                list2 = list2->next;
-            }
-            curr = curr->next;
-        }
-        if (!list1)
-            curr->next = list2;
-        else
-            curr->next = list1;
-        return ptr;
-    }
+	ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+		ListNode* tmp = new ListNode();
+		ListNode* ans = tmp; ListNode* iter1 = list1; ListNode* iter2 = list2;
+		while (iter1 != NULL || iter2 != NULL) {
+			if (iter1 == NULL) {
+				tmp->next = iter2;
+				iter2 = iter2->next;
+			}
+			else if (iter2 == NULL) {
+				tmp->next = iter1;
+				iter1 = iter1->next;
+			}
+			else if (iter1->val <= iter2->val) {
+				tmp->next = iter1;
+				iter1 = iter1->next;
+			}
+			else {
+				tmp->next = iter2;
+				iter2 = iter2->next;
+			}
+			tmp = tmp->next;
+		}
+		return ans->next;
+	}
 };
 // @lc code=end
